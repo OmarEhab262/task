@@ -15,10 +15,14 @@ function App() {
     setValues(newValues);
   };
 
+  const calculateRowSum = (r) => {
+    if (!values[r] || values[r].length === 0) return "0"; // التحقق من وجود الصف
+    return values[r].reduce((acc, num) => acc + (parseFloat(num) || 0), 0);
+  };
+
   const calculateRowAverage = (r) => {
     if (!values[r] || values[r].length === 0) return "0.00"; // التحقق من وجود الصف
-    const sum = values[r].reduce((acc, num) => acc + (parseFloat(num) || 0), 0);
-    return (sum / cols).toFixed(2);
+    return (calculateRowSum(r) / cols).toFixed(2);
   };
 
   return (
@@ -67,12 +71,13 @@ function App() {
         <table className="table-auto w-full border-collapse border border-gray-300 text-center">
           <thead>
             <tr className="bg-gray-200">
-              <th className="border border-gray-300 p-2">رقم العمود</th>
+              <th className="border border-gray-300 p-2">رقم الصف</th>
               {Array.from({ length: cols }, (_, c) => (
                 <th key={c} className="border border-gray-300 p-2">
                   عمود {c + 1}
                 </th>
               ))}
+              <th className="border border-gray-300 p-2">مجموع الصف</th>
               <th className="border border-gray-300 p-2">متوسط الصف</th>
             </tr>
           </thead>
@@ -92,6 +97,9 @@ function App() {
                     />
                   </td>
                 ))}
+                <td className="border border-gray-300 p-2 font-bold text-green-600">
+                  {calculateRowSum(r)}
+                </td>
                 <td className="border border-gray-300 p-2 font-bold text-blue-600">
                   {calculateRowAverage(r)}
                 </td>
