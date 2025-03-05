@@ -25,6 +25,10 @@ function App() {
     return (calculateRowSum(r) / cols).toFixed(2);
   };
 
+  const resetValues = () => {
+    setValues(Array.from({ length: rows }, () => Array(cols).fill("")));
+  };
+
   return (
     <div className="p-4 space-y-4 max-w-md mx-auto">
       <div className="flex space-x-2">
@@ -67,6 +71,17 @@ function App() {
           </div>
         </div>
       </div>
+
+      {/* زر لإعادة تعيين القيم */}
+      <div className="flex justify-center mt-4">
+        <button
+          onClick={resetValues}
+          className="bg-red-500 text-white p-2 rounded"
+        >
+          مسح كل شيء
+        </button>
+      </div>
+
       <div className="overflow-x-auto">
         <table className="table-auto w-full border-collapse border border-gray-300 text-center">
           <thead>
